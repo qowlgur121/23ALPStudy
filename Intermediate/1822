@@ -1,0 +1,48 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int a[1000005];
+int b[1000005];
+std::vector<int> idx;
+int cnt = 0;
+
+int main() {
+	int n, m;
+	std::cin >> n >> m;
+
+	for (int i = 0; i < n; i++)
+	{
+		std::cin >> a[i];
+	}
+	for (int i = 0; i < m; i++)
+	{
+		std::cin >> b[i];
+	}
+	std::sort(a, a + n);
+	std::sort(b, b + m);
+
+	//a에는 속하면서 b에는 속하지 않는 원소를 출력 정렬순. 만약 없다면 0만을 출력
+
+	//a의 원소를 하나씩 돌아보면서 b와 비교한다. 만약 b에 속하는 원소이면 1을 리턴할 것이다.
+	//조건문을 1이면 해당 인덱스에 해당하는 원소를 출력한다.
+	//만약 하나도 없으면 0을 출력. count 를 하면 될것.
+	for (int i = 0; i < n; i++) {
+		if (std::binary_search(b, b + m, a[i])==0) {
+			
+			idx.push_back(a[i]);
+			cnt++;
+			continue;
+		}
+	}
+	if (cnt != 0) {
+		std::cout << cnt << '\n';
+		for (int i = 0; i < cnt; i++) {
+			std::cout << idx[i] << ' ';
+		}
+
+	}
+	else
+		std::cout << '0';
+
+}
