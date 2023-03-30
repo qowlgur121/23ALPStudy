@@ -1,0 +1,28 @@
+#include <iostream>
+#include <algorithm>
+
+int n, s, tot;
+int a[100005];
+int mn = 0x7fffffff;
+
+int main() {
+	std::ios::sync_with_stdio(0);
+	std::cin.tie(0);
+	std::cin>>n >> s;
+	for (int i = 0; i < n; i++) {
+		std::cin >> a[i];
+	}
+	tot = a[0];
+	int en = 0;
+	for (int st = 0; st < n; st++) {
+		while (en < n && tot < s) {
+			en++;
+			if (en != n)tot += a[en];
+		}
+		if (en == n)break;	//en이 범위를 벗어날 시 종료
+		mn = std::min(mn, en - st + 1);
+		tot -= a[st];
+	}
+	if (mn == 0x7fffffff) mn = 0;
+	std::cout << mn;
+}
