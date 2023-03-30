@@ -1,0 +1,57 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int n;
+std::vector<int> arr;
+
+void eratos(int n) {
+    std::vector<bool> prime(n + 1, true);
+
+    for (int i = 2; i * i <= n; ++i) {
+        if (prime[i]) {
+            for (int j = i * i; j <= n; j += i) {
+                prime[j] = false;
+            }
+        }
+    }
+
+    for (int i = 2; i <= n; ++i) {
+        if (prime[i]) arr.push_back(i);
+    }
+}
+
+
+int main(void) {
+    std::ios_base::sync_with_stdio(0);
+    std::cin.tie(0);
+ 
+    std::cin >> n;
+    if (n == 1) {
+        std::cout << 0;
+        return 0;
+    }
+
+    eratos(n);
+
+    int s = arr.size();
+
+    int ans = 0;
+    int start = 0;
+    int end = 0;
+    int sum = 0;
+
+    while (end <= s) {
+        if (sum >= n) {     //합이 n보다 크거나 같을 때 앞의 포인터를 뒤로 옮기면서 합에서 빼준다.
+            sum -= arr[start++];
+        }
+        if (sum < n) {      //합이 n보다 작을 때 뒤의 포인터를 뒤로 옮기면서 합에 더해준다.
+            sum += arr[end++];
+        }
+        if (sum == n) ans++;    //합이 n과 같으면 카운트를 올린다.
+    }
+
+    std::cout << ans;
+
+    return 0;
+}
